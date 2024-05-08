@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #fff;
+            background-image: url("http://127.0.0.1:5000/static/blockchai.jpeg");
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #444;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+        main {
+            padding: 20px;
+        }
+        section {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #00008B;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Website</h1>
+    </header>
+    <nav>
+        <a onclick="showTab('create-account')">Create Account</a>
+        <a onclick="showTab('login')">Account Login</a>
+        <a onclick="showTab('about')">About</a>
+        <a onclick="showTab('contact')">Contact</a>
+    </nav>
+    <main>
+        <section id="create-account">
+            <h2>Create Account</h2>
+            <form action="/submit_form" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name"><br><br>
+                <label for="reg_no">ID Number:</label>
+                <input type="text" id="reg_no" name="reg_no"><br><br>
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone"><br><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email"><br><br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password"><br><br>
+                <input type="submit" value="Submit">
+            </form>
+        </section>
+        <section id="login">
+            <h2>Account Login</h2>
+            <form id="loginForm">
+                <label for="loginEmail">Email:</label>
+                <input type="email" id="loginEmail" name="loginEmail"><br><br>
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" name="loginPassword"><br><br>
+                <input type="submit" value="Login">
+            </form>
+        </section>
+        <section id="about">
+            <h2>About Us</h2>
+            <p>Feel free to learn more on blockchain and earn more by trading on halecoin.Halecoin is one of the authorized blockchain companies that was started by one of the Kenyan junior software engineers and it is believed to be the easiest and cheapest to trade on. Besides cryptocurrencies, one can also sell goods and even make orders from other countries and get free delivery for single items ordered. Our main office is located in Nairobi, Kenya.</p>
+        </section>
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Email: johnbarack10@gmail.com</p>
+            <p>Phone: +254703750808</p>
+            <a href=""><img src="http://127.0.0.1:5000/static/Whatsapplogo.jpeg"></a>
+            <a href=""><img src="http://127.0.0.1:5000/static/github.png"></a>
+            <a href=""><img src="http://127.0.0.1:5000/static/linkedinlogo.png"></a>
+        </section>
+    </main>
+    <p>This is the most effective web page for Blockchain application.</p>
+    <img src="blockchai.jpeg">
+    <footer>
+        <p>&copy; 2024 Our Website. All rights reserved.</p>
+    </footer>
+
+    <script>
+    function showTab(user_app) {
+        var sections = document.querySelectorAll('section');
+        sections.forEach(function (section) {
+            section.style.display = 'none';
+        });
+        document.getElementById(user_app).style.display = 'block';
+    }
+
+    // Add event listener for login form submission
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get input values
+        var email = document.getElementById('loginEmail').value;
+        var password = document.getElementById('loginPassword').value;
+
+        // Make a fetch request to validate credentials
+        fetch('/validate_login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email, password: password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Login successful');
+                // Redirect to sales dashboard or perform any other action
+                window.location.href = '/Dashboard.html';
+            } else {
+                alert('Invalid credentials. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+</script>
+
+</body>
+</html>
